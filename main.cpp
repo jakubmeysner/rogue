@@ -226,9 +226,9 @@ int main() {
         CONSOLE_SCREEN_BUFFER_INFO bufferInfo;
         GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &bufferInfo);
 
-        if (bufferInfo.dwSize.X >= 175 && bufferInfo.dwSize.Y >= 50) break;
+        if (bufferInfo.dwSize.X >= 150 && bufferInfo.dwSize.Y >= 30) break;
 
-        std::cout << "Zwiększ rozmiar okna do min. 175x50 (aktualny " << bufferInfo.dwSize.X << "x"
+        std::cout << "Zwiększ rozmiar okna do min. 150x30 (aktualny " << bufferInfo.dwSize.X << "x"
                   << bufferInfo.dwSize.Y << "), a następnie naciśnij ENTER!" << std::endl;
 
         while (!wasKeyPressed(VK_RETURN));
