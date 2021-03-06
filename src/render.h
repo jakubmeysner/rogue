@@ -6,11 +6,7 @@
 
 void clear();
 
-void setCursorPosition(short x, short y);
-
 void setCursorVisibility(bool visible);
-
-void setColor(int color);
 
 void resetColor();
 

@@ -1,10 +1,10 @@
 #include <thread>
 #include <vector>
 #include <iostream>
-#include <windows.h>
-#include "src/state.h"
-#include "src/render.h"
-#include "src/input.h"
+#include <Windows.h>
+#include "state.h"
+#include "render.h"
+#include "input.h"
 
 int main() {
     SetConsoleOutputCP(65001);
