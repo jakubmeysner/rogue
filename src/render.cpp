@@ -3,6 +3,9 @@
 int WHITE_ON_BLACK = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
 int BLACK_ON_WHITE = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
 
+int RED_ON_BLACK = FOREGROUND_RED;
+int RED_ON_WHITE = FOREGROUND_RED | BLACK_ON_WHITE;
+
 void clear() {
     auto handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -111,28 +114,98 @@ void render(State *state) {
                 std::cout << "Poziom trudności";
 
                 setCursorPosition(columns / 2 - 3, lines / 2 - 1);
-                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::EASY)
+                if (state->settingsDifficultyLevelOption == DifficultyLevelOption::EASY)
                     setColor(BLACK_ON_WHITE);
                 std::cout << (state->difficultyLevel == DifficultyLevel::EASY ? "ŁATWY" : "Łatwy");
                 resetColor();
 
                 setCursorPosition(columns / 2 - 4, lines / 2 + 1);
-                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::NORMAL)
+                if (state->settingsDifficultyLevelOption == DifficultyLevelOption::NORMAL)
                     setColor(BLACK_ON_WHITE);
                 std::cout << (state->difficultyLevel == DifficultyLevel::NORMAL ? "NORMALNY" : "Normalny");
                 resetColor();
 
                 setCursorPosition(columns / 2 - 3, lines / 2 + 3);
-                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::HARD)
+                if (state->settingsDifficultyLevelOption == DifficultyLevelOption::HARD)
                     setColor(BLACK_ON_WHITE);
                 std::cout << (state->difficultyLevel == DifficultyLevel::HARD ? "TRUDNY" : "Trudny");
                 resetColor();
 
                 setCursorPosition(columns / 2 - 2, lines / 2 + 5);
-                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::BACK)
+                if (state->settingsDifficultyLevelOption == DifficultyLevelOption::BACK)
                     setColor(BLACK_ON_WHITE);
                 std::cout << "Wróć";
                 resetColor();
+                break;
+            case Screen::PLAY_DIFFICULTY_LEVEL:
+                setCursorPosition(columns / 2 - 8, lines / 2 - 5);
+                std::cout << "Poziom trudności";
+
+                setCursorPosition(columns / 2 - 3, lines / 2 - 1);
+                if (state->playDifficultyLevelOption == DifficultyLevelOption::EASY)
+                    setColor(BLACK_ON_WHITE);
+                std::cout << "Łatwy";
+                resetColor();
+
+                setCursorPosition(columns / 2 - 4, lines / 2 + 1);
+                if (state->playDifficultyLevelOption == DifficultyLevelOption::NORMAL)
+                    setColor(BLACK_ON_WHITE);
+                std::cout << "Normalny";
+                resetColor();
+
+                setCursorPosition(columns / 2 - 3, lines / 2 + 3);
+                if (state->playDifficultyLevelOption == DifficultyLevelOption::HARD)
+                    setColor(BLACK_ON_WHITE);
+                std::cout << "Trudny";
+                resetColor();
+
+                setCursorPosition(columns / 2 - 2, lines / 2 + 5);
+                if (state->playDifficultyLevelOption == DifficultyLevelOption::BACK)
+                    setColor(BLACK_ON_WHITE);
+                std::cout << "Wróć";
+                resetColor();
+                break;
+            case Screen::PLAY_LEVEL:
+                setCursorPosition(columns / 2 - 3, lines / 2 - 5);
+                std::cout << "Poziom";
+
+                setCursorPosition(columns / 2 - 6, lines / 2 - 1);
+                if (state->playLevelOption == LevelOption::OVERWORLD) setColor(BLACK_ON_WHITE);
+                std::cout << "Powierzchnia";
+                resetColor();
+
+                setCursorPosition(columns / 2 - 4, lines / 2 + 1);
+                if (state->unlockedLevel == Level::OVERWORLD) {
+                    if (state->playLevelOption == LevelOption::MINES) {
+                        setColor(RED_ON_WHITE);
+                    } else {
+                        setColor(RED_ON_BLACK);
+                    }
+                } else if (state->playLevelOption == LevelOption::MINES) {
+                    setColor(BLACK_ON_WHITE);
+                }
+                std::cout << "Kopalnie";
+                resetColor();
+
+                setCursorPosition(columns / 2 - 3, lines / 2 + 3);
+                if (state->unlockedLevel != Level::HELL) {
+                    if (state->playLevelOption == LevelOption::HELL) {
+                        setColor(RED_ON_WHITE);
+                    } else {
+                        setColor(RED_ON_BLACK);
+                    }
+                } else if (state->playLevelOption == LevelOption::HELL) {
+                    setColor(BLACK_ON_WHITE);
+                }
+                std::cout << "Piekło";
+                resetColor();
+
+                setCursorPosition(columns / 2 - 2, lines / 2 + 5);
+                if (state->playLevelOption == LevelOption::BACK) setColor(BLACK_ON_WHITE);
+                std::cout << "Wróć";
+                resetColor();
+
+                break;
         }
     }
 }
