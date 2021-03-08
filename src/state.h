@@ -1,7 +1,7 @@
 #pragma once
 
 enum class Screen {
-    MAIN_MENU, SETTINGS
+    MAIN_MENU, SETTINGS, SETTINGS_DIFFICULTY_LEVEL
 };
 
 enum class MainMenuOption {
@@ -9,7 +9,15 @@ enum class MainMenuOption {
 };
 
 enum class SettingsOption {
-    RESET_PROGRESS, BACK
+    CHANGE_DIFFICULTY_LEVEL, RESET_PROGRESS, BACK
+};
+
+enum SettingsDifficultyLevelOption {
+    EASY, NORMAL, HARD, BACK
+};
+
+enum class DifficultyLevel {
+    EASY, NORMAL, HARD
 };
 
 class State {
@@ -20,5 +28,12 @@ public:
     bool changedScreen = false;
 
     MainMenuOption mainMenuOption = MainMenuOption::PLAY;
-    SettingsOption settingsOption = SettingsOption::RESET_PROGRESS;
+    SettingsOption settingsOption = SettingsOption::CHANGE_DIFFICULTY_LEVEL;
+    SettingsDifficultyLevelOption settingsDifficultyLevelOption = SettingsDifficultyLevelOption::EASY;
+
+    bool initialLoadPerformed = false;
+    bool pendingSave = false;
+
+    bool playedOnce = false;
+    DifficultyLevel difficultyLevel = DifficultyLevel::NORMAL;
 };

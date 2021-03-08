@@ -3,6 +3,7 @@
 #include <iostream>
 #include <Windows.h>
 #include "state.h"
+#include "save.h"
 #include "render.h"
 #include "input.h"
 
@@ -25,13 +26,22 @@ int main() {
 
     auto state = State();
 
+    auto saveThread = std::thread(save, &state);
+
+    while (!state.initialLoadPerformed);
+
     auto renderThread = std::thread(render, &state);
     auto inputThread = std::thread(input, &state);
 
+    saveThread.join();
     renderThread.join();
     inputThread.join();
 
     clear();
     resetColor();
     setCursorVisibility(true);
+
+    std::cout << "Naciśnij Ctrl+C, aby zakończyć." << std::endl;
+    std::cin.ignore(INT_MAX);
+    clear();
 }

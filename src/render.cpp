@@ -73,12 +73,12 @@ void render(State *state) {
                 setCursorPosition(columns / 2 - 2, lines / 2);
                 if (state->mainMenuOption == MainMenuOption::PLAY) setColor(BLACK_ON_WHITE);
                 std::cout << "Graj";
-                if (state->mainMenuOption == MainMenuOption::PLAY) resetColor();
+                resetColor();
 
                 setCursorPosition(columns / 2 - 5, lines / 2 + 2);
                 if (state->mainMenuOption == MainMenuOption::SETTINGS) setColor(BLACK_ON_WHITE);
                 std::cout << "Ustawienia";
-                if (state->mainMenuOption == MainMenuOption::SETTINGS) resetColor();
+                resetColor();
 
                 setCursorPosition(columns / 2 - 3, lines / 2 + 4);
                 if (state->mainMenuOption == MainMenuOption::EXIT) setColor(BLACK_ON_WHITE);
@@ -87,20 +87,48 @@ void render(State *state) {
 
                 break;
             case Screen::SETTINGS:
-                setCursorPosition(columns / 2 - 5, lines / 2 - 3);
+                setCursorPosition(columns / 2 - 5, lines / 2 - 4);
                 std::cout << "Ustawienia";
 
-                setCursorPosition(columns / 2 - 8, lines / 2 + 1);
+                setCursorPosition(columns / 2 - 11, lines / 2);
+                if (state->settingsOption == SettingsOption::CHANGE_DIFFICULTY_LEVEL) setColor(BLACK_ON_WHITE);
+                std::cout << "Zmień poziom trudności";
+                resetColor();
+
+                setCursorPosition(columns / 2 - 8, lines / 2 + 2);
                 if (state->settingsOption == SettingsOption::RESET_PROGRESS) setColor(BLACK_ON_WHITE);
                 std::cout << "Zresetuj postęp";
-                if (state->settingsOption == SettingsOption::RESET_PROGRESS) resetColor();
+                resetColor();
 
-                setCursorPosition(columns / 2 - 2, lines / 2 + 3);
+                setCursorPosition(columns / 2 - 2, lines / 2 + 4);
                 if (state->settingsOption == SettingsOption::BACK) setColor(BLACK_ON_WHITE);
                 std::cout << "Wróć";
-                if (state->settingsOption == SettingsOption::BACK) resetColor();
+                resetColor();
 
                 break;
+            case Screen::SETTINGS_DIFFICULTY_LEVEL:
+                setCursorPosition(columns / 2 - 8, lines / 2 - 5);
+                std::cout << "Poziom trudności";
+
+                setCursorPosition(columns / 2 - 3, lines / 2 - 1);
+                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::EASY) setColor(BLACK_ON_WHITE);
+                std::cout << (state->difficultyLevel == DifficultyLevel::EASY ? "ŁATWY" : "Łatwy");
+                resetColor();
+
+                setCursorPosition(columns / 2 - 4, lines / 2 + 1);
+                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::NORMAL) setColor(BLACK_ON_WHITE);
+                std::cout << (state->difficultyLevel == DifficultyLevel::NORMAL ? "NORMALNY" : "Normalny");
+                resetColor();
+
+                setCursorPosition(columns / 2 - 3, lines / 2 + 3);
+                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::HARD) setColor(BLACK_ON_WHITE);
+                std::cout << (state->difficultyLevel == DifficultyLevel::HARD ? "TRUDNY" : "Trudny");
+                resetColor();
+
+                setCursorPosition(columns / 2 - 2, lines / 2 + 5);
+                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::BACK) setColor(BLACK_ON_WHITE);
+                std::cout << "Wróć";
+                resetColor();
         }
     }
 }
