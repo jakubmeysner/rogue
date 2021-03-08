@@ -54,19 +54,27 @@ void input(State *state) {
             case Screen::SETTINGS:
                 if (wasKeyPressed(VK_RETURN)) {
                     switch (state->settingsOption) {
+                        case SettingsOption::CHANGE_DIFFICULTY_LEVEL:
+                            state->screen = Screen::SETTINGS_DIFFICULTY_LEVEL;
+                            state->changedScreen = true;
+                            state->settingsOption = SettingsOption::CHANGE_DIFFICULTY_LEVEL;
+                            break;
                         case SettingsOption::RESET_PROGRESS:
 
                             break;
                         case SettingsOption::BACK:
                             state->screen = Screen::MAIN_MENU;
                             state->changedScreen = true;
-                            state->settingsOption = SettingsOption::RESET_PROGRESS;
+                            state->settingsOption = SettingsOption::CHANGE_DIFFICULTY_LEVEL;
                             break;
                     }
                 } else if (wasKeyPressed(VK_UP)) {
                     switch (state->settingsOption) {
-                        case SettingsOption::RESET_PROGRESS:
+                        case SettingsOption::CHANGE_DIFFICULTY_LEVEL:
                             state->settingsOption = SettingsOption::BACK;
+                            break;
+                        case SettingsOption::RESET_PROGRESS:
+                            state->settingsOption = SettingsOption::CHANGE_DIFFICULTY_LEVEL;
                             break;
                         case SettingsOption::BACK:
                             state->settingsOption = SettingsOption::RESET_PROGRESS;
@@ -74,11 +82,64 @@ void input(State *state) {
                     }
                 } else if (wasKeyPressed(VK_DOWN)) {
                     switch (state->settingsOption) {
+                        case SettingsOption::CHANGE_DIFFICULTY_LEVEL:
+                            state->settingsOption = SettingsOption::RESET_PROGRESS;
+                            break;
                         case SettingsOption::RESET_PROGRESS:
                             state->settingsOption = SettingsOption::BACK;
                             break;
                         case SettingsOption::BACK:
-                            state->settingsOption = SettingsOption::RESET_PROGRESS;
+                            state->settingsOption = SettingsOption::CHANGE_DIFFICULTY_LEVEL;
+                            break;
+                    }
+                }
+                break;
+            case Screen::SETTINGS_DIFFICULTY_LEVEL:
+                if (wasKeyPressed(VK_RETURN)) {
+                    switch (state->settingsDifficultyLevelOption) {
+                        case SettingsDifficultyLevelOption::EASY:
+                            state->difficultyLevel = DifficultyLevel::EASY;
+                            break;
+                        case SettingsDifficultyLevelOption::NORMAL:
+                            state->difficultyLevel = DifficultyLevel::NORMAL;
+                            break;
+                        case SettingsDifficultyLevelOption::HARD:
+                            state->difficultyLevel = DifficultyLevel::HARD;
+                            break;
+                        case SettingsDifficultyLevelOption::BACK:
+                            state->screen = Screen::SETTINGS;
+                            state->changedScreen = true;
+                            state->settingsDifficultyLevelOption = SettingsDifficultyLevelOption::EASY;
+                            break;
+                    }
+                } else if (wasKeyPressed(VK_UP)) {
+                    switch (state->settingsDifficultyLevelOption) {
+                        case SettingsDifficultyLevelOption::EASY:
+                            state->settingsDifficultyLevelOption = SettingsDifficultyLevelOption::BACK;
+                            break;
+                        case SettingsDifficultyLevelOption::NORMAL:
+                            state->settingsDifficultyLevelOption = SettingsDifficultyLevelOption::EASY;
+                            break;
+                        case SettingsDifficultyLevelOption::HARD:
+                            state->settingsDifficultyLevelOption = SettingsDifficultyLevelOption::NORMAL;
+                            break;
+                        case SettingsDifficultyLevelOption::BACK:
+                            state->settingsDifficultyLevelOption = SettingsDifficultyLevelOption::HARD;
+                            break;
+                    }
+                } else if (wasKeyPressed(VK_DOWN)) {
+                    switch (state->settingsDifficultyLevelOption) {
+                        case SettingsDifficultyLevelOption::EASY:
+                            state->settingsDifficultyLevelOption = SettingsDifficultyLevelOption::NORMAL;
+                            break;
+                        case SettingsDifficultyLevelOption::NORMAL:
+                            state->settingsDifficultyLevelOption = SettingsDifficultyLevelOption::HARD;
+                            break;
+                        case SettingsDifficultyLevelOption::HARD:
+                            state->settingsDifficultyLevelOption = SettingsDifficultyLevelOption::BACK;
+                            break;
+                        case SettingsDifficultyLevelOption::BACK:
+                            state->settingsDifficultyLevelOption = SettingsDifficultyLevelOption::EASY;
                             break;
                     }
                 }
