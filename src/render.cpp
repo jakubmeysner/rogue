@@ -111,22 +111,26 @@ void render(State *state) {
                 std::cout << "Poziom trudności";
 
                 setCursorPosition(columns / 2 - 3, lines / 2 - 1);
-                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::EASY) setColor(BLACK_ON_WHITE);
+                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::EASY)
+                    setColor(BLACK_ON_WHITE);
                 std::cout << (state->difficultyLevel == DifficultyLevel::EASY ? "ŁATWY" : "Łatwy");
                 resetColor();
 
                 setCursorPosition(columns / 2 - 4, lines / 2 + 1);
-                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::NORMAL) setColor(BLACK_ON_WHITE);
+                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::NORMAL)
+                    setColor(BLACK_ON_WHITE);
                 std::cout << (state->difficultyLevel == DifficultyLevel::NORMAL ? "NORMALNY" : "Normalny");
                 resetColor();
 
                 setCursorPosition(columns / 2 - 3, lines / 2 + 3);
-                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::HARD) setColor(BLACK_ON_WHITE);
+                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::HARD)
+                    setColor(BLACK_ON_WHITE);
                 std::cout << (state->difficultyLevel == DifficultyLevel::HARD ? "TRUDNY" : "Trudny");
                 resetColor();
 
                 setCursorPosition(columns / 2 - 2, lines / 2 + 5);
-                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::BACK) setColor(BLACK_ON_WHITE);
+                if (state->settingsDifficultyLevelOption == SettingsDifficultyLevelOption::BACK)
+                    setColor(BLACK_ON_WHITE);
                 std::cout << "Wróć";
                 resetColor();
         }
