@@ -97,7 +97,7 @@ void render(State *state) {
 
                 setCursorPosition(columns / 2 - 8, lines / 2 + 2);
                 if (state->settingsOption == SettingsOption::RESET_PROGRESS) setColor(BLACK_ON_WHITE);
-                std::cout << "Zresetuj postęp";
+                std::cout << (state->recentlyResetProgress ? "ZRESETUJ POSTĘP" : "Zresetuj postęp");
                 resetColor();
 
                 setCursorPosition(columns / 2 - 2, lines / 2 + 4);

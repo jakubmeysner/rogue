@@ -58,14 +58,20 @@ void input(State *state) {
                             state->screen = Screen::SETTINGS_DIFFICULTY_LEVEL;
                             state->changedScreen = true;
                             state->settingsOption = SettingsOption::CHANGE_DIFFICULTY_LEVEL;
+                            state->recentlyResetProgress = false;
                             break;
                         case SettingsOption::RESET_PROGRESS:
+                            state->playedOnce = false;
+                            state->difficultyLevel = DifficultyLevel::NORMAL;
 
+                            state->pendingSave = true;
+                            state->recentlyResetProgress = true;
                             break;
                         case SettingsOption::BACK:
                             state->screen = Screen::MAIN_MENU;
                             state->changedScreen = true;
                             state->settingsOption = SettingsOption::CHANGE_DIFFICULTY_LEVEL;
+                            state->recentlyResetProgress = false;
                             break;
                     }
                 } else if (wasKeyPressed(VK_UP)) {
