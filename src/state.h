@@ -34,6 +34,8 @@ public:
     bool initialLoadPerformed = false;
     bool pendingSave = false;
 
+    bool recentlyResetProgress = false;
+
     bool playedOnce = false;
     DifficultyLevel difficultyLevel = DifficultyLevel::NORMAL;
 };
