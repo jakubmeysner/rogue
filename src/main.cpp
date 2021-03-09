@@ -9,6 +9,8 @@
 #include "generate.h"
 
 int main() {
+    PlaySound(".\\assets\\amogus-drip.wav", nullptr, SND_ASYNC | SND_FILENAME | SND_LOOP);
+
     SetConsoleOutputCP(65001);
 
     while (true) {
