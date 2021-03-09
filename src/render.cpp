@@ -5,6 +5,8 @@ int BLACK_ON_WHITE = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
 
 int RED_ON_BLACK = FOREGROUND_RED;
 int RED_ON_WHITE = FOREGROUND_RED | BLACK_ON_WHITE;
+int RED_GREEN_ON_BLACK = FOREGROUND_RED | FOREGROUND_GREEN;
+int BLUE_INTENSITY_ON_BLACK = FOREGROUND_BLUE | FOREGROUND_INTENSITY;
 
 void clear() {
     auto handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -63,9 +65,9 @@ void render(State *state) {
     while (true) {
         if (state->exit) break;
 
-        if (state->requiresRefresh) {
+        if (state->pendingClear) {
             clear();
-            state->requiresRefresh = false;
+            state->pendingClear = false;
         }
 
         switch (state->screen) {
@@ -113,7 +115,7 @@ void render(State *state) {
                 setCursorPosition(columns / 2 - 8, lines / 2 - 5);
                 std::cout << "Poziom trudności";
 
-                setCursorPosition(columns / 2 - 3, lines / 2 - 1);
+                setCursorPosition(columns / 2 - 2, lines / 2 - 1);
                 if (state->settingsDifficultyLevelOption == DifficultyLevelOption::EASY)
                     setColor(BLACK_ON_WHITE);
                 std::cout << (state->difficultyLevel == DifficultyLevel::EASY ? "ŁATWY" : "Łatwy");
@@ -141,7 +143,7 @@ void render(State *state) {
                 setCursorPosition(columns / 2 - 8, lines / 2 - 5);
                 std::cout << "Poziom trudności";
 
-                setCursorPosition(columns / 2 - 3, lines / 2 - 1);
+                setCursorPosition(columns / 2 - 2, lines / 2 - 1);
                 if (state->playDifficultyLevelOption == DifficultyLevelOption::EASY)
                     setColor(BLACK_ON_WHITE);
                 std::cout << "Łatwy";
@@ -204,6 +206,86 @@ void render(State *state) {
                 if (state->playLevelOption == LevelOption::BACK) setColor(BLACK_ON_WHITE);
                 std::cout << "Wróć";
                 resetColor();
+
+                break;
+            case Screen::LOADING:
+                setCursorPosition(columns / 2 - 6, lines / 2);
+                std::cout << "Ładowanie...";
+
+                break;
+            case Screen::PAUSE_MENU:
+                setCursorPosition(columns / 2 - 5, lines / 2 - 3);
+                std::cout << "Spauzowano";
+
+                setCursorPosition(columns / 2 - 4, lines / 2 + 1);
+                if (state->pauseMenuOption == PauseMenuOption::CONTINUE) setColor(BLACK_ON_WHITE);
+                std::cout << "Kontynuuj";
+                resetColor();
+
+                setCursorPosition(columns / 2 - 2, lines / 2 + 3);
+                if (state->pauseMenuOption == PauseMenuOption::EXIT) setColor(BLACK_ON_WHITE);
+                std::cout << "Wyjdź";
+                resetColor();
+
+                break;
+            case Screen::GAME:
+                auto fov = (
+                        state->difficultyLevel == DifficultyLevel::NORMAL ?
+                        48 : (state->difficultyLevel == DifficultyLevel::EASY ? 64 : 32)
+                );
+
+                auto cStart = (columns - fov) / 2;
+                auto cStartPos = state->playerPosition.x - fov / 2;
+                auto cEnd = (columns + fov) / 2;
+                auto lStart = (lines - fov) / 2;
+                auto lStartPos = state->playerPosition.y - fov / 2;
+                auto lEnd = (lines + fov) / 2;
+
+                for (int c = cStart; c <= cEnd; c++) {
+                    for (int l = lStart; l <= lEnd; l++) {
+                        setCursorPosition(c, l);
+
+                        if (l == lStart || l == lEnd) {
+                            std::cout << "-";
+                        } else if (c == cStart || c == cEnd) {
+                            std::cout << "|";
+                        } else {
+                            if (c == columns / 2 && l == lines / 2) {
+                                setColor(BLUE_INTENSITY_ON_BLACK);
+                                std::cout << "p";
+                                resetColor();
+                            } else {
+                                auto x = cStartPos - cStart + c;
+                                auto y = lStartPos - lStart + l;
+
+                                if (x >= 0 && x <= 1000 && y >= 0 && y <= 1000) {
+                                    switch (state->world[x][y].type) {
+                                        case BlockType::WALL:
+                                            setColor(BLACK_ON_WHITE);
+                                            std::cout << "W";
+                                            resetColor();
+                                            break;
+                                        case BlockType::DOOR:
+                                            setColor(RED_GREEN_ON_BLACK);
+                                            std::cout << "D";
+                                            resetColor();
+                                            break;
+                                        default:
+                                            std::cout << " ";
+                                    }
+                                } else {
+                                    std::cout << " ";
+                                }
+                            }
+                        }
+                    }
+                }
+
+                setCursorPosition(cEnd + 4, lStart + 1);
+                std::cout << "Zdrowie:  " << state->health << "/" << state->maxHealth << "  ";
+
+                setCursorPosition(cEnd + 4, lStart + 2);
+                std::cout << "Kondycja: " << state->stamina << "/" << state->maxStamina << "  ";
 
                 break;
         }

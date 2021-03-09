@@ -6,6 +6,7 @@
 #include "save.h"
 #include "render.h"
 #include "input.h"
+#include "generate.h"
 
 int main() {
     SetConsoleOutputCP(65001);
@@ -32,10 +33,12 @@ int main() {
 
     auto renderThread = std::thread(render, &state);
     auto inputThread = std::thread(input, &state);
+    auto generateThread = std::thread(generate, &state);
 
     saveThread.join();
     renderThread.join();
     inputThread.join();
+    generateThread.join();
 
     clear();
     resetColor();
