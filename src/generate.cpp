@@ -60,6 +60,53 @@ World generateOverworld(State *state) {
         }
     }
 
+    std::bernoulli_distribution itemDistrib(
+            (state->difficultyLevel == DifficultyLevel::NORMAL ? 0.03 : (state->difficultyLevel ==
+                                                                         DifficultyLevel::EASY) ? 0.05 : 0.01));
+    std::uniform_int_distribution itemTypeDistrib(1, 4);
+    std::normal_distribution<> swordDamageDistrib(15, 5);
+    std::normal_distribution<> swordSweepDistrib(20, 10);
+    std::normal_distribution<> bowDamageDistrib(10, 5);
+    std::normal_distribution<> bowRangeDistrib(10, 5);
+    std::normal_distribution<> armorProtDistrib(45, 15);
+    std::normal_distribution<> armorCritProtDistrib(20, 10);
+    std::normal_distribution<> durabilityDistrib(20, 10);
+    std::normal_distribution<> arrowCountDistrib(3, 2);
+
+    for (int c = 50; c < 950; c++) {
+        for (int l = 50; l < 950; l++) {
+            if (world[c][l].type == BlockType::EMPTY_INSIDE && itemDistrib(gen)) {
+                auto item = Item();
+
+                switch (itemTypeDistrib(gen)) {
+                    case 1:
+                        item.type = ItemType::SWORD;
+                        item.damage = std::max((int) swordDamageDistrib(gen), 1);
+                        item.sweep = std::max(((double) (int) swordSweepDistrib(gen) / 100), 0.1);
+                        item.durability = std::max((int) durabilityDistrib(gen), 1);
+                        break;
+                    case 2:
+                        item.type = ItemType::BOW;
+                        item.damage = std::max((int) bowDamageDistrib(gen), 1);
+                        item.range = std::max((int) bowRangeDistrib(gen), 1);
+                        item.durability = std::max((int) durabilityDistrib(gen), 1);
+                        break;
+                    case 3:
+                        item.type = ItemType::ARMOR;
+                        item.protection = std::max(((double) (int) armorProtDistrib(gen) / 100), 0.1);
+                        item.criticalProtection = std::max(((double) (int) armorCritProtDistrib(gen) / 100), 0.1);
+                        break;
+                    case 4:
+                        item.type = ItemType::ARROWS;
+                        item.count = std::min((int) arrowCountDistrib(gen), 1);
+                        break;
+                }
+
+                world[c][l].item = item;
+            }
+        }
+    }
+
     return world;
 }
 
@@ -110,10 +157,19 @@ void generate(State *state) {
                     break;
             }
 
-            int health = 10;
-            int maxHealth = 10;
-            int stamina = 10;
-            int maxStamina = 10;
+            state->health = 10;
+            state->maxHealth = 10;
+            state->stamina = 10;
+            state->maxStamina = 10;
+
+            state->sword.reset();
+            state->bow.reset();
+            state->armor.reset();
+
+            state->arrows = 0;
+            state->maxArrows = 5;
+
+            state->keys = 0;
 
             state->pendingGenerate = false;
             state->screen = Screen::GAME;
