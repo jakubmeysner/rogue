@@ -29,17 +29,23 @@ World generateOverworld(State *state) {
                     }
                 }
 
-                std::bernoulli_distribution doorDistrib(2.0 / ((cSize + lSize - 4) * 2));
-                bool placedDoor = false;
+                std::uniform_int_distribution doorWallDistrib(1, 4);
+                auto doorWall = doorWallDistrib(gen);
+                std::uniform_int_distribution doorWallElemDistrib(1, (doorWall <= 2 ? lSize - 2 : cSize - 2));
+                auto doorWallElem = doorWallElemDistrib(gen);
 
                 for (int cBuild = 0; cBuild < cSize; cBuild++) {
                     for (int lBuild = 0; lBuild < lSize; lBuild++) {
                         if ((cBuild == 0 || cBuild == cSize - 1) && (lBuild == 0 || lBuild == lSize - 1)) {
                             world[c + cBuild][l + lBuild].type = BlockType::WALL;
                         } else if (cBuild == 0 || cBuild == cSize - 1 || lBuild == 0 || lBuild == lSize - 1) {
-                            if (!placedDoor && doorDistrib(gen)) {
+                            if (
+                                    (doorWall == 1 && cBuild == 0 && lBuild == doorWallElem) ||
+                                    (doorWall == 2 && cBuild == cSize - 1 && lBuild == doorWallElem) ||
+                                    (doorWall == 3 && lBuild == 0 && cBuild == doorWallElem) ||
+                                    (doorWall == 4 && lBuild == lSize - 1 && cBuild == doorWallElem)
+                                    ) {
                                 world[c + cBuild][l + lBuild].type = BlockType::DOOR;
-                                placedDoor = true;
                             } else {
                                 world[c + cBuild][l + lBuild].type = BlockType::WALL;
                             }
