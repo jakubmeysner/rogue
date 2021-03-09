@@ -16,7 +16,7 @@ void input(State *state) {
                         case MainMenuOption::PLAY:
                             if (!state->playedOnce) {
                                 state->screen = Screen::PLAY_DIFFICULTY_LEVEL;
-                                state->changedScreen = true;
+                                state->requiresRefresh = true;
                                 state->mainMenuOption = MainMenuOption::PLAY;
                             } else {
                                 if (state->unlockedLevel == Level::OVERWORLD) {
@@ -28,14 +28,14 @@ void input(State *state) {
                                 }
 
                                 state->screen = Screen::PLAY_LEVEL;
-                                state->changedScreen = true;
+                                state->requiresRefresh = true;
                                 state->mainMenuOption = MainMenuOption::PLAY;
                             }
 
                             break;
                         case MainMenuOption::SETTINGS:
                             state->screen = Screen::SETTINGS;
-                            state->changedScreen = true;
+                            state->requiresRefresh = true;
                             state->mainMenuOption = MainMenuOption::PLAY;
                             break;
                         case MainMenuOption::EXIT:
@@ -79,7 +79,7 @@ void input(State *state) {
                     switch (state->settingsOption) {
                         case SettingsOption::CHANGE_DIFFICULTY_LEVEL:
                             state->screen = Screen::SETTINGS_DIFFICULTY_LEVEL;
-                            state->changedScreen = true;
+                            state->requiresRefresh = true;
                             state->settingsOption = SettingsOption::CHANGE_DIFFICULTY_LEVEL;
                             state->recentlyResetProgress = false;
                             break;
@@ -92,7 +92,7 @@ void input(State *state) {
                             break;
                         case SettingsOption::BACK:
                             state->screen = Screen::MAIN_MENU;
-                            state->changedScreen = true;
+                            state->requiresRefresh = true;
                             state->settingsOption = SettingsOption::CHANGE_DIFFICULTY_LEVEL;
                             state->recentlyResetProgress = false;
                             break;
@@ -137,7 +137,7 @@ void input(State *state) {
                             break;
                         case DifficultyLevelOption::BACK:
                             state->screen = Screen::SETTINGS;
-                            state->changedScreen = true;
+                            state->requiresRefresh = true;
                             state->settingsDifficultyLevelOption = DifficultyLevelOption::EASY;
                             break;
                     }
@@ -179,7 +179,7 @@ void input(State *state) {
                         case DifficultyLevelOption::EASY:
                             state->difficultyLevel = DifficultyLevel::EASY;
                             state->screen = Screen::PLAY_LEVEL;
-                            state->changedScreen = true;
+                            state->requiresRefresh = true;
                             state->playDifficultyLevelOption = NORMAL;
 
                             if (state->unlockedLevel == Level::OVERWORLD) {
@@ -194,7 +194,7 @@ void input(State *state) {
                         case DifficultyLevelOption::NORMAL:
                             state->difficultyLevel = DifficultyLevel::NORMAL;
                             state->screen = Screen::PLAY_LEVEL;
-                            state->changedScreen = true;
+                            state->requiresRefresh = true;
                             state->playDifficultyLevelOption = NORMAL;
 
                             if (state->unlockedLevel == Level::OVERWORLD) {
@@ -209,7 +209,7 @@ void input(State *state) {
                         case DifficultyLevelOption::HARD:
                             state->difficultyLevel = DifficultyLevel::HARD;
                             state->screen = Screen::PLAY_LEVEL;
-                            state->changedScreen = true;
+                            state->requiresRefresh = true;
                             state->playDifficultyLevelOption = NORMAL;
 
                             if (state->unlockedLevel == Level::OVERWORLD) {
@@ -223,7 +223,7 @@ void input(State *state) {
                             break;
                         case DifficultyLevelOption::BACK:
                             state->screen = Screen::MAIN_MENU;
-                            state->changedScreen = true;
+                            state->requiresRefresh = true;
                             state->playDifficultyLevelOption = NORMAL;
                             break;
                     }
@@ -281,7 +281,7 @@ void input(State *state) {
                             } else {
                                 state->screen = Screen::MAIN_MENU;
                             }
-                            state->changedScreen = true;
+                            state->requiresRefresh = true;
 
                             if (state->unlockedLevel == Level::OVERWORLD) {
                                 state->playLevelOption = LevelOption::OVERWORLD;
