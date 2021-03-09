@@ -16,7 +16,7 @@ void input(State *state) {
                         case MainMenuOption::PLAY:
                             if (!state->playedOnce) {
                                 state->screen = Screen::PLAY_DIFFICULTY_LEVEL;
-                                state->requiresRefresh = true;
+                                state->pendingClear = true;
                                 state->mainMenuOption = MainMenuOption::PLAY;
                             } else {
                                 if (state->unlockedLevel == Level::OVERWORLD) {
@@ -28,14 +28,14 @@ void input(State *state) {
                                 }
 
                                 state->screen = Screen::PLAY_LEVEL;
-                                state->requiresRefresh = true;
+                                state->pendingClear = true;
                                 state->mainMenuOption = MainMenuOption::PLAY;
                             }
 
                             break;
                         case MainMenuOption::SETTINGS:
                             state->screen = Screen::SETTINGS;
-                            state->requiresRefresh = true;
+                            state->pendingClear = true;
                             state->mainMenuOption = MainMenuOption::PLAY;
                             break;
                         case MainMenuOption::EXIT:
@@ -79,7 +79,7 @@ void input(State *state) {
                     switch (state->settingsOption) {
                         case SettingsOption::CHANGE_DIFFICULTY_LEVEL:
                             state->screen = Screen::SETTINGS_DIFFICULTY_LEVEL;
-                            state->requiresRefresh = true;
+                            state->pendingClear = true;
                             state->settingsOption = SettingsOption::CHANGE_DIFFICULTY_LEVEL;
                             state->recentlyResetProgress = false;
                             break;
@@ -92,7 +92,7 @@ void input(State *state) {
                             break;
                         case SettingsOption::BACK:
                             state->screen = Screen::MAIN_MENU;
-                            state->requiresRefresh = true;
+                            state->pendingClear = true;
                             state->settingsOption = SettingsOption::CHANGE_DIFFICULTY_LEVEL;
                             state->recentlyResetProgress = false;
                             break;
@@ -137,7 +137,7 @@ void input(State *state) {
                             break;
                         case DifficultyLevelOption::BACK:
                             state->screen = Screen::SETTINGS;
-                            state->requiresRefresh = true;
+                            state->pendingClear = true;
                             state->settingsDifficultyLevelOption = DifficultyLevelOption::EASY;
                             break;
                     }
@@ -179,7 +179,7 @@ void input(State *state) {
                         case DifficultyLevelOption::EASY:
                             state->difficultyLevel = DifficultyLevel::EASY;
                             state->screen = Screen::PLAY_LEVEL;
-                            state->requiresRefresh = true;
+                            state->pendingClear = true;
                             state->playDifficultyLevelOption = NORMAL;
 
                             if (state->unlockedLevel == Level::OVERWORLD) {
@@ -194,7 +194,7 @@ void input(State *state) {
                         case DifficultyLevelOption::NORMAL:
                             state->difficultyLevel = DifficultyLevel::NORMAL;
                             state->screen = Screen::PLAY_LEVEL;
-                            state->requiresRefresh = true;
+                            state->pendingClear = true;
                             state->playDifficultyLevelOption = NORMAL;
 
                             if (state->unlockedLevel == Level::OVERWORLD) {
@@ -209,7 +209,7 @@ void input(State *state) {
                         case DifficultyLevelOption::HARD:
                             state->difficultyLevel = DifficultyLevel::HARD;
                             state->screen = Screen::PLAY_LEVEL;
-                            state->requiresRefresh = true;
+                            state->pendingClear = true;
                             state->playDifficultyLevelOption = NORMAL;
 
                             if (state->unlockedLevel == Level::OVERWORLD) {
@@ -223,7 +223,7 @@ void input(State *state) {
                             break;
                         case DifficultyLevelOption::BACK:
                             state->screen = Screen::MAIN_MENU;
-                            state->requiresRefresh = true;
+                            state->pendingClear = true;
                             state->playDifficultyLevelOption = NORMAL;
                             break;
                     }
@@ -264,15 +264,24 @@ void input(State *state) {
                     switch (state->playLevelOption) {
                         case LevelOption::OVERWORLD:
                             state->level = Level::OVERWORLD;
+                            state->screen = Screen::LOADING;
+                            state->pendingClear = true;
+                            state->pendingGenerate = true;
                             break;
                         case LevelOption::MINES:
                             if (state->unlockedLevel != Level::OVERWORLD) {
                                 state->level = Level::MINES;
+                                state->screen = Screen::LOADING;
+                                state->pendingClear = true;
+                                state->pendingGenerate = true;
                             }
                             break;
                         case LevelOption::HELL:
                             if (state->unlockedLevel == Level::HELL) {
                                 state->level = Level::MINES;
+                                state->screen = Screen::LOADING;
+                                state->pendingClear = true;
+                                state->pendingGenerate = true;
                             }
                             break;
                         case LevelOption::BACK:
@@ -281,7 +290,7 @@ void input(State *state) {
                             } else {
                                 state->screen = Screen::MAIN_MENU;
                             }
-                            state->requiresRefresh = true;
+                            state->pendingClear = true;
 
                             if (state->unlockedLevel == Level::OVERWORLD) {
                                 state->playLevelOption = LevelOption::OVERWORLD;
@@ -321,6 +330,72 @@ void input(State *state) {
                         case LevelOption::BACK:
                             state->playLevelOption = LevelOption::OVERWORLD;
                             break;
+                    }
+                }
+                break;
+            case Screen::PAUSE_MENU:
+                if (wasKeyPressed(VK_RETURN)) {
+                    switch (state->pauseMenuOption) {
+                        case PauseMenuOption::CONTINUE:
+                            state->screen = Screen::GAME;
+                            state->pendingClear = true;
+                            break;
+                        case PauseMenuOption::EXIT:
+                            state->screen = Screen::MAIN_MENU;
+                            state->pendingClear = true;
+                            break;
+                    }
+                } else if (wasKeyPressed(VK_UP)) {
+                    switch (state->pauseMenuOption) {
+                        case PauseMenuOption::CONTINUE:
+                            state->pauseMenuOption = PauseMenuOption::EXIT;
+                            break;
+                        case PauseMenuOption::EXIT:
+                            state->pauseMenuOption = PauseMenuOption::CONTINUE;
+                            break;
+                    }
+                } else if (wasKeyPressed(VK_DOWN)) {
+                    switch (state->pauseMenuOption) {
+                        case PauseMenuOption::CONTINUE:
+                            state->pauseMenuOption = PauseMenuOption::EXIT;
+                            break;
+                        case PauseMenuOption::EXIT:
+                            state->pauseMenuOption = PauseMenuOption::CONTINUE;
+                            break;
+                    }
+                }
+                break;
+            case Screen::GAME:
+                if (wasKeyPressed(VK_ESCAPE)) {
+                    state->screen = Screen::PAUSE_MENU;
+                    state->pendingClear = true;
+                } else if (wasKeyPressed('A')) {
+                    if (
+                            state->playerPosition.x > 0 &&
+                            state->world[state->playerPosition.x - 1][state->playerPosition.y].type != BlockType::WALL
+                            ) {
+                        state->playerPosition.x--;
+                    }
+                } else if (wasKeyPressed('W')) {
+                    if (
+                            state->playerPosition.y > 0 &&
+                            state->world[state->playerPosition.x][state->playerPosition.y - 1].type != BlockType::WALL
+                            ) {
+                        state->playerPosition.y--;
+                    }
+                } else if (wasKeyPressed('S')) {
+                    if (
+                            state->playerPosition.y < 1000 &&
+                            state->world[state->playerPosition.x][state->playerPosition.y + 1].type != BlockType::WALL
+                            ) {
+                        state->playerPosition.y++;
+                    }
+                } else if (wasKeyPressed('D')) {
+                    if (
+                            state->playerPosition.x < 1000 &&
+                            state->world[state->playerPosition.x + 1][state->playerPosition.y].type != BlockType::WALL
+                            ) {
+                        state->playerPosition.x++;
                     }
                 }
                 break;
