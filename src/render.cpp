@@ -212,6 +212,64 @@ void render(State *state) {
                 setCursorPosition(columns / 2 - 6, lines / 2);
                 std::cout << "Ładowanie...";
 
+//                setColor(RED_ON_BLACK);
+//                setCursorPosition(columns / 2 - 4, lines / 2 + 2);
+//                std::cout << "AMOGUSA";
+//                setCursorPosition(columns / 2 - 4, lines / 2 + 3);
+//                std::cout << "MO   GU";
+//                setCursorPosition(columns / 2 - 4, lines / 2 + 4);
+//                std::cout << "SAMOGUS";
+//                setCursorPosition(columns / 2 - 4, lines / 2 + 5);
+//                std::cout << "AMOGUSA";
+//                setCursorPosition(columns / 2 - 4, lines / 2 + 6);
+//                std::cout << "MO   GU";
+//                resetColor();
+
+                {
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 2);
+                    std::cout << "⡯⡯⡾⠝⠘⠀   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢊⠘⡮⣣⠪⠢⡑⡌ ㅤ";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 3);
+                    std::cout << "⠟⠝⠈⠀⠀⠀.  ⠡⠀⠠⢈⠠⢐⢠⢂⢔⣐⢄⡂⢔⠀⡁⢉⠸⢨⢑⠕⡌ ㅤ ⠀";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 4);
+                    std::cout << "⠀ ⡀⠁⠀⠀⠀⡀⢂⠡⠈⡔⣕⢮⣳⢯⣿⣻⣟⣯⣯⢷⣫⣆⡂  ⢐⠑⡌";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 5);
+                    std::cout << "⢀⠠⠐⠈⠀⢀⢂⠢⡂⠕⡁⣝⢮⣳⢽⡽⣾⣻⣿⣯⡯⣟⣞⢾⢜⢆⠀⡀⠀⠪";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 6);
+                    std::cout << "⣬⠂⠀⠀⢀⢂⢪⠨⢂⠥⣺⡪⣗⢗⣽⢽⡯⣿⣽⣷⢿⡽⡾⡽⣝⢎⠀⠀⠀⢡";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 7);
+                    std::cout << "⣿⠀⠀⠀⢂⠢⢂⢥⢱⡹⣪⢞⡵⣻⡪⡯⡯⣟⡾⣿⣻⡽⣯⡻⣪⠧⠑⠀⠁⢐";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 8);
+                    std::cout << "⣿⠀⠀⠀⠢⢑⠠⠑⠕⡝⡎⡗⡝⡎⣞⢽⡹⣕⢯⢻⠹⡹⢚⠝⡷⡽⡨⠀⠀⢔";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 9);
+                    std::cout << "⣿⡯⠀⢈⠈⢄⠂⠂⠐⠀⠌⠠⢑⠱⡱⡱⡑⢔⠁⠀⡀⠐⠐⠐⡡⡹⣪⠀⠀⢘";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 10);
+                    std::cout << "⣿⣽⠀⡀⡊⠀⠐⠨⠈⡁⠂⢈⠠⡱⡽⣷⡑⠁⠠⠑⠀⢉⢇⣤⢘⣪⢽⠀⢌⢎";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 11);
+                    std::cout << "⣿⢾⠀⢌⠌⠀⡁⠢⠂⠐⡀⠀⢀⢳⢽⣽⡺⣨⢄⣑⢉⢃⢭⡲⣕⡭⣹⠠⢐⢗";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 12);
+                    std::cout << "⣿⡗⠀⠢⠡⡱⡸⣔⢵⢱⢸⠈⠀⡪⣳⣳⢹⢜⡵⣱⢱⡱⣳⡹⣵⣻⢔⢅⢬⡷";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 13);
+                    std::cout << "⣷⡇⡂⠡⡑⢕⢕⠕⡑⠡⢂⢊⢐⢕⡝⡮⡧⡳⣝⢴⡐⣁⠃⡫⡒⣕⢏⡮⣷⡟";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 14);
+                    std::cout << "⣷⣻⣅⠑⢌⠢⠁⢐⠠⠑⡐⠐⠌⡪⠮⡫⠪⡪⡪⣺⢸⠰⠡⠠⠐⢱⠨⡪⡪⡰";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 15);
+                    std::cout << "⣯⢷⣟⣇⡂⡂⡌⡀⠀⠁⡂⠅⠂⠀⡑⡄⢇⠇⢝⡨⡠⡁⢐⠠⢀⢪⡐⡜⡪⡊";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 16);
+                    std::cout << "⣿⢽⡾⢹⡄⠕⡅⢇⠂⠑⣴⡬⣬⣬⣆⢮⣦⣷⣵⣷⡗⢃⢮⠱⡸⢰⢱⢸⢨⢌";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 17);
+                    std::cout << "⣯⢯⣟⠸⣳⡅⠜⠔⡌⡐⠈⠻⠟⣿⢿⣿⣿⠿⡻⣃⠢⣱⡳⡱⡩⢢⠣⡃⠢⠁";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 18);
+                    std::cout << "⡯⣟⣞⡇⡿⣽⡪⡘⡰⠨⢐⢀⠢⢢⢄⢤⣰⠼⡾⢕⢕⡵⣝⠎⢌⢪⠪⡘⡌⠀";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 19);
+                    std::cout << "⡯⣳⠯⠚⢊⠡⡂⢂⠨⠊⠔⡑⠬⡸⣘⢬⢪⣪⡺⡼⣕⢯⢞⢕⢝⠎⢻⢼⣀⠀";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 20);
+                    std::cout << "⠁⡂⠔⡁⡢⠣⢀⠢⠀⠅⠱⡐⡱⡘⡔⡕⡕⣲⡹⣎⡮⡏⡑⢜⢼⡱⢩⣗⣯⣟";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 21);
+                    std::cout << "⢀⢂⢑⠀⡂⡃⠅⠊⢄⢑⠠⠑⢕⢕⢝⢮⢺⢕⢟⢮⢊⢢⢱⢄⠃⣇⣞⢞⣞⢾";
+                    setCursorPosition(columns / 2 - 15, lines / 2 + 22);
+                    std::cout << "⢀⠢⡑⡀⢂⢊⠠⠁⡂⡐⠀⠅⡈⠪⠪⠪⠣⠫⠑⡁⢔⠕⣜⣜⢦⡰⡎⡯⡾⡽";
+                }
+
                 break;
             case Screen::PAUSE_MENU:
                 setCursorPosition(columns / 2 - 5, lines / 2 - 3);
@@ -282,10 +340,10 @@ void render(State *state) {
                 }
 
                 setCursorPosition(cEnd + 4, lStart + 1);
-                std::cout << "Zdrowie:  " << state->health << "/" << state->maxHealth << "  ";
+                std::cout << "Zdrowie:  " << state->health << "/" << state->maxHealth << "          ";
 
                 setCursorPosition(cEnd + 4, lStart + 2);
-                std::cout << "Kondycja: " << state->stamina << "/" << state->maxStamina << "  ";
+                std::cout << "Kondycja: " << state->stamina << "/" << state->maxStamina << "          ";
 
                 break;
         }

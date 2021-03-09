@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <optional>
 
 enum class Screen {
     MAIN_MENU, SETTINGS, SETTINGS_DIFFICULTY_LEVEL, PLAY_DIFFICULTY_LEVEL, PLAY_LEVEL,
@@ -65,6 +66,15 @@ enum class ItemType {
 class Item {
 public:
     ItemType type = ItemType::SWORD;
+
+    int damage = 10;
+    double sweep = 0.1;
+    int range = 10;
+
+    double protection = 0.3;
+    double criticalProtection = 0.1;
+
+    int durability = 10;
 };
 
 class State {
@@ -99,4 +109,8 @@ public:
     int maxHealth = 10;
     int stamina = 10;
     int maxStamina = 10;
+
+    std::optional<Item> sword;
+    std::optional<Item> bow;
+    std::optional<Item> armor;
 };

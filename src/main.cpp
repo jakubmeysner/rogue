@@ -1,7 +1,7 @@
 #include <thread>
 #include <vector>
 #include <iostream>
-#include <Windows.h>
+#include <windows.h>
 #include "state.h"
 #include "save.h"
 #include "render.h"
@@ -9,6 +9,8 @@
 #include "generate.h"
 
 int main() {
+    PlaySound(TEXT(".\\assets\\amongus-drip.wav"), NULL, SND_FILENAME | SND_ASYNC);
+
     SetConsoleOutputCP(65001);
 
     while (true) {
@@ -47,4 +49,6 @@ int main() {
     std::cout << "Naciśnij Ctrl+C, aby zakończyć." << std::endl;
     std::cin.ignore(INT_MAX);
     clear();
+
+    PlaySound(NULL, NULL, SND_FILENAME | SND_ASYNC);
 }
