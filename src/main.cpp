@@ -9,6 +9,7 @@
 #include "generate.h"
 
 int main() {
+    SetConsoleTitle("Rogue");
     PlaySound(".\\assets\\amogus-drip.wav", nullptr, SND_ASYNC | SND_FILENAME | SND_LOOP);
 
     SetConsoleOutputCP(65001);
