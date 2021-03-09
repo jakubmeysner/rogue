@@ -63,9 +63,9 @@ void render(State *state) {
     while (true) {
         if (state->exit) break;
 
-        if (state->changedScreen) {
+        if (state->requiresRefresh) {
             clear();
-            state->changedScreen = false;
+            state->requiresRefresh = false;
         }
 
         switch (state->screen) {

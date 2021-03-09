@@ -33,7 +33,7 @@ public:
     bool exit = false;
 
     Screen screen = Screen::MAIN_MENU;
-    bool changedScreen = false;
+    bool requiresRefresh = false;
 
     MainMenuOption mainMenuOption = MainMenuOption::DEFAULT;
     SettingsOption settingsOption = SettingsOption::CHANGE_DIFFICULTY_LEVEL;
