@@ -369,12 +369,39 @@ void input(State *state) {
                 if (wasKeyPressed(VK_ESCAPE)) {
                     state->screen = Screen::PAUSE_MENU;
                     state->pendingClear = true;
+                } else if (wasKeyPressed('Q')) {
+                    auto item = state->world[state->playerPosition.x][state->playerPosition.y].item;
+
+                    switch (item->type) {
+                        case ItemType::SWORD:
+                            state->world[state->playerPosition.x][state->playerPosition.y].item.swap(state->sword);
+                            break;
+                        case ItemType::BOW:
+                            state->world[state->playerPosition.x][state->playerPosition.y].item.swap(state->bow);
+                            break;
+                        case ItemType::ARMOR:
+                            state->world[state->playerPosition.x][state->playerPosition.y].item.swap(state->armor);
+                            break;
+                    }
                 } else if (wasKeyPressed('A')) {
                     if (
                             state->playerPosition.x > 0 &&
                             state->world[state->playerPosition.x - 1][state->playerPosition.y].type != BlockType::WALL
                             ) {
                         state->playerPosition.x--;
+
+                        auto item = state->world[state->playerPosition.x][state->playerPosition.y].item;
+
+                        if (item->type == ItemType::ARROWS) {
+                            auto transferable = (std::min)(state->maxArrows - state->arrows, item->count);
+                            state->arrows += transferable;
+
+                            if (transferable == item->count) {
+                                state->world[state->playerPosition.x][state->playerPosition.y].item.reset();
+                            } else {
+                                state->world[state->playerPosition.x][state->playerPosition.y].item->count -= transferable;
+                            }
+                        }
                     }
                 } else if (wasKeyPressed('W')) {
                     if (
@@ -382,6 +409,19 @@ void input(State *state) {
                             state->world[state->playerPosition.x][state->playerPosition.y - 1].type != BlockType::WALL
                             ) {
                         state->playerPosition.y--;
+
+                        auto item = state->world[state->playerPosition.x][state->playerPosition.y].item;
+
+                        if (item->type == ItemType::ARROWS) {
+                            auto transferable = (std::min)(state->maxArrows - state->arrows, item->count);
+                            state->arrows += transferable;
+
+                            if (transferable == item->count) {
+                                state->world[state->playerPosition.x][state->playerPosition.y].item.reset();
+                            } else {
+                                state->world[state->playerPosition.x][state->playerPosition.y].item->count -= transferable;
+                            }
+                        }
                     }
                 } else if (wasKeyPressed('S')) {
                     if (
@@ -389,6 +429,19 @@ void input(State *state) {
                             state->world[state->playerPosition.x][state->playerPosition.y + 1].type != BlockType::WALL
                             ) {
                         state->playerPosition.y++;
+
+                        auto item = state->world[state->playerPosition.x][state->playerPosition.y].item;
+
+                        if (item->type == ItemType::ARROWS) {
+                            auto transferable = (std::min)(state->maxArrows - state->arrows, item->count);
+                            state->arrows += transferable;
+
+                            if (transferable == item->count) {
+                                state->world[state->playerPosition.x][state->playerPosition.y].item.reset();
+                            } else {
+                                state->world[state->playerPosition.x][state->playerPosition.y].item->count -= transferable;
+                            }
+                        }
                     }
                 } else if (wasKeyPressed('D')) {
                     if (
@@ -396,6 +449,19 @@ void input(State *state) {
                             state->world[state->playerPosition.x + 1][state->playerPosition.y].type != BlockType::WALL
                             ) {
                         state->playerPosition.x++;
+
+                        auto item = state->world[state->playerPosition.x][state->playerPosition.y].item;
+
+                        if (item->type == ItemType::ARROWS) {
+                            auto transferable = (std::min)(state->maxArrows - state->arrows, item->count);
+                            state->arrows += transferable;
+
+                            if (transferable == item->count) {
+                                state->world[state->playerPosition.x][state->playerPosition.y].item.reset();
+                            } else {
+                                state->world[state->playerPosition.x][state->playerPosition.y].item->count -= transferable;
+                            }
+                        }
                     }
                 }
                 break;

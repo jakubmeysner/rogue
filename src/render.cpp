@@ -317,19 +317,23 @@ void render(State *state) {
                                 auto y = lStartPos - lStart + l;
 
                                 if (x >= 0 && x <= 1000 && y >= 0 && y <= 1000) {
-                                    switch (state->world[x][y].type) {
-                                        case BlockType::WALL:
-                                            setColor(BLACK_ON_WHITE);
-                                            std::cout << "W";
-                                            resetColor();
-                                            break;
-                                        case BlockType::DOOR:
-                                            setColor(RED_GREEN_ON_BLACK);
-                                            std::cout << "D";
-                                            resetColor();
-                                            break;
-                                        default:
-                                            std::cout << " ";
+                                    if (state->world[x][y].item.has_value()) {
+                                        std::cout << "i";
+                                    } else {
+                                        switch (state->world[x][y].type) {
+                                            case BlockType::WALL:
+                                                setColor(BLACK_ON_WHITE);
+                                                std::cout << "W";
+                                                resetColor();
+                                                break;
+                                            case BlockType::DOOR:
+                                                setColor(RED_GREEN_ON_BLACK);
+                                                std::cout << "D";
+                                                resetColor();
+                                                break;
+                                            default:
+                                                std::cout << " ";
+                                        }
                                     }
                                 } else {
                                     std::cout << " ";
@@ -340,10 +344,56 @@ void render(State *state) {
                 }
 
                 setCursorPosition(cEnd + 4, lStart + 1);
-                std::cout << "Zdrowie:  " << state->health << "/" << state->maxHealth << "          ";
+                std::cout << "Zdrowie:   " << state->health << "/" << state->maxHealth << "          ";
 
                 setCursorPosition(cEnd + 4, lStart + 2);
-                std::cout << "Kondycja: " << state->stamina << "/" << state->maxStamina << "          ";
+                std::cout << "Kondycja:  " << state->stamina << "/" << state->maxStamina << "          ";
+
+                setCursorPosition(cEnd + 4, lStart + 4);
+                std::cout << "Klucze:    " << state->keys << "/3";
+
+                setCursorPosition(cEnd + 4, lStart + 6);
+                std::cout << "Miecz:     " << (state->sword.has_value() ? state->sword->getShortInfo() : "(Brak)")
+                          << "          ";
+
+                setCursorPosition(cEnd + 4, lStart + 7);
+                std::cout << "Łuk:       " << (state->bow.has_value() ? state->bow->getShortInfo() : "(Brak)")
+                          << "          ";
+
+                setCursorPosition(cEnd + 4, lStart + 8);
+                std::cout << "Zbroja:    " << (state->armor.has_value() ? state->armor->getShortInfo() : "(Brak)")
+                          << "          ";
+
+                setCursorPosition(cEnd + 4, lStart + 9);
+                std::cout << "Strzały:   " << state->arrows << "/" << state->maxArrows << "          ";
+
+                setCursorPosition(cEnd + 4, lStart + 11);
+                std::cout << "Przedmiot: ";
+
+                auto item = state->world[state->playerPosition.x][state->playerPosition.y].item;
+
+                if (item.has_value()) {
+                    switch (item->type) {
+                        case ItemType::SWORD:
+                            std::cout << "Miecz";
+                            break;
+                        case ItemType::BOW:
+                            std::cout << "Łuk";
+                            break;
+                        case ItemType::ARMOR:
+                            std::cout << "Zbroja";
+                            break;
+                        case ItemType::ARROWS:
+                            std::cout << "Strzały";
+                            break;
+                    }
+
+                    std::cout << " " << item->getShortInfo();
+                } else {
+                    std::cout << "Brak";
+                }
+
+                std::cout << "                              ";
 
                 break;
         }

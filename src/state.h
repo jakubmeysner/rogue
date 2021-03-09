@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <optional>
+#include <sstream>
+#include <iomanip>
 
 enum class Screen {
     MAIN_MENU, SETTINGS, SETTINGS_DIFFICULTY_LEVEL, PLAY_DIFFICULTY_LEVEL, PLAY_LEVEL,
@@ -41,13 +43,6 @@ enum class BlockType {
     WALL, DOOR, EMPTY_INSIDE
 };
 
-class Block {
-public:
-    BlockType type = BlockType::EMPTY;
-};
-
-typedef std::vector<std::vector<Block>> World;
-
 class Position {
 public:
     Position(int x, int y) {
@@ -60,7 +55,7 @@ public:
 };
 
 enum class ItemType {
-    SWORD, BOW, ARMOR
+    SWORD, BOW, ARMOR, ARROWS
 };
 
 class Item {
@@ -68,14 +63,49 @@ public:
     ItemType type = ItemType::SWORD;
 
     int damage = 10;
+
     double sweep = 0.1;
+
     int range = 10;
 
     double protection = 0.3;
     double criticalProtection = 0.1;
 
-    int durability = 10;
+    int durability = 20;
+
+    int count = 5;
+
+    std::string getShortInfo() {
+        std::stringstream str;
+        str << std::setprecision(2) << "(";
+
+        switch (this->type) {
+            case ItemType::SWORD:
+                str << this->damage << ", " << this->sweep << ", " << this->durability;
+                break;
+            case ItemType::BOW:
+                str << this->damage << ", " << this->range << ", " << this->durability;
+                break;
+            case ItemType::ARMOR:
+                str << this->protection << ", " << this->criticalProtection << ", " << this->durability;
+                break;
+            case ItemType::ARROWS:
+                str << this->count;
+                break;
+        }
+
+        str << ")";
+        return str.str();
+    }
 };
+
+class Block {
+public:
+    BlockType type = BlockType::EMPTY;
+    std::optional<Item> item;
+};
+
+typedef std::vector<std::vector<Block>> World;
 
 class State {
 public:
@@ -113,4 +143,9 @@ public:
     std::optional<Item> sword;
     std::optional<Item> bow;
     std::optional<Item> armor;
+
+    int arrows = 0;
+    int maxArrows = 5;
+
+    int keys = 0;
 };
