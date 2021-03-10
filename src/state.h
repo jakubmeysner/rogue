@@ -4,6 +4,7 @@
 #include <optional>
 #include <sstream>
 #include <iomanip>
+#include <map>
 
 enum class Screen {
     MAIN_MENU, SETTINGS, SETTINGS_DIFFICULTY_LEVEL, PLAY_DIFFICULTY_LEVEL, PLAY_LEVEL,
@@ -52,6 +53,10 @@ public:
 
     int x = 0;
     int y = 0;
+
+    bool operator<(Position const &r) const {
+        return this->x < r.x;
+    }
 };
 
 enum class ItemType {
@@ -107,6 +112,16 @@ public:
 
 typedef std::vector<std::vector<Block>> World;
 
+enum class EntityType {
+    ZOMBIE, ARCHER, BOOMER
+};
+
+class Entity {
+public:
+    EntityType type = EntityType::ZOMBIE;
+    Position position = Position(0, 0);
+};
+
 class State {
 public:
     bool exit = false;
@@ -148,4 +163,6 @@ public:
     int maxArrows = 5;
 
     int keys = 0;
+
+    std::vector<Entity> entities;
 };

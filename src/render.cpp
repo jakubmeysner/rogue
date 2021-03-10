@@ -317,7 +317,28 @@ void render(State *state) {
                                 auto y = lStartPos - lStart + l;
 
                                 if (x >= 0 && x <= 1000 && y >= 0 && y <= 1000) {
-                                    if (state->world[x][y].item.has_value()) {
+                                    auto entity = std::find_if(
+                                            std::begin(state->entities), std::end(state->entities),
+                                            [x, y](Entity entity) {
+                                                return entity.position.x == x && entity.position.y == y;
+                                            }
+                                    );
+
+                                    if (entity != std::end(state->entities)) {
+                                        switch ((*entity).type) {
+                                            case EntityType::ZOMBIE:
+                                                std::cout << "z";
+                                                break;
+                                            case EntityType::ARCHER:
+                                                std::cout << "a";
+                                                break;
+                                            case EntityType::BOOMER:
+                                                std::cout << "b";
+                                                break;
+                                            default:
+                                                std::cout << "t";
+                                        }
+                                    } else if (state->world[x][y].item.has_value()) {
                                         std::cout << "i";
                                     } else {
                                         switch (state->world[x][y].type) {
