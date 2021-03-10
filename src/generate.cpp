@@ -107,6 +107,35 @@ World generateOverworld(State *state) {
         }
     }
 
+    std::bernoulli_distribution zombieDistrib(0.001);
+
+    std::bernoulli_distribution archerDistrib(0.0005);
+
+    std::bernoulli_distribution boomerDistrib(0.0001);
+
+    for (int c = 0; c < 1000; c++) {
+        for (int l = 0; l < 1000; l++) {
+            if (world[c][l].type == BlockType::EMPTY) {
+                if (zombieDistrib(gen)) {
+                    auto entity = Entity();
+                    entity.type = EntityType::ZOMBIE;
+                    entity.position = Position(c, l);
+                    state->entities.push_back(entity);
+                } else if (archerDistrib(gen)) {
+                    auto entity = Entity();
+                    entity.type = EntityType::ARCHER;
+                    entity.position = Position(c, l);
+                    state->entities.push_back(entity);
+                } else if (boomerDistrib(gen)) {
+                    auto entity = Entity();
+                    entity.type = EntityType::BOOMER;
+                    entity.position = Position(c, l);
+                    state->entities.push_back(entity);
+                }
+            }
+        }
+    }
+
     return world;
 }
 
@@ -144,6 +173,8 @@ void generate(State *state) {
 
             std::uniform_int_distribution<int> playerPosDistrib(100, 900);
             state->playerPosition = Position(playerPosDistrib(gen), playerPosDistrib(gen));
+
+            state->entities.clear();
 
             switch (state->level) {
                 case Level::OVERWORLD:
